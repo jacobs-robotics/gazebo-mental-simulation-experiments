@@ -6,8 +6,12 @@ source config/experiments.cfg
 ( cd .. || ./stop.sh && ./start.sh )
 
 # determine number of containers to use in parallel
+# make sure that only one container is used on enabled GUI to avoid crashes
 containers_array=( $containers )
-if [[ ($# == 1) ]]; then
+if [[ ${gui} == "true" ]]; then
+    NUM_CONTAINERS=1
+    echo -e "${YELLOW}>>> GUI enabled, hence only one container will be used.${NC}"
+elif [[ ($# == 1) ]]; then
     NUM_CONTAINERS=$1
 else
     NUM_CONTAINERS=${#containers_array[@]}
