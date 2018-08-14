@@ -53,7 +53,7 @@ if [[ ($world_file = "") ]]; then
     fi
 else
     # check if given world file exists inside the docker container(!)
-    if !($(docker exec --user="`id -u -n`" ${container} /bin/bash -c ". /home/`id -u -n`/gazebo-mental-simulation/devel/setup.bash && test -e $world_file")); then
+    if !($(docker exec --user="`id -u -n`" ${container} /bin/bash -c ". /home/`id -u -n`/gazebo-mental-simulation/devel/setup.bash && test -e world_files/$world_file")); then
         echo -e "${RED}>>> ERROR: World file ${world_file} not found inside container!${NC}" >&2
         exit 1
     fi

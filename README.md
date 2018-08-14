@@ -3,8 +3,9 @@ A set of scripts to run experiments using our [parallelized Gazebo container set
 
 ## Experiment on a single world file
 ```bash
-./experiment.sh <container_name> <world_file_path>
+./experiment.sh <container_name> <world_file_name>
 ```
+`<world_file_name>` defines the file name inside the `world_files` folder with a `.world` extension
 
 ## Repetitive experiment on a number of world files
 This will use all existing containers (as defined in `containers.cfg`) to run your experiment via the launch file specified in `experiments.cfg`. This operates on all world files in the world file directory given in `containers.cfg`.
