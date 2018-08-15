@@ -47,9 +47,9 @@ if [[ ($world_file = "") ]]; then
     # use default world
     if [ "${gui}" == "false" ]; then
         echo -e "${YELLOW}>>> Using headless operation with display ID ${DISPLAY_ID}!${NC}"
-        timeout --signal=SIGKILL $timeout docker exec $INTERACTIVE -t ${container} /bin/bash -c ". /usr/share/gazebo/setup.sh && (killall -q Xvfb; rm -f /tmp/.X${DISPLAY_ID}-lock; Xvfb :${DISPLAY_ID} -screen 0 1600x1200x16 & export DISPLAY=:${DISPLAY_ID}.0 && . /home/`id -u -n`/gazebo-mental-simulation/devel/setup.bash && roslaunch ${experiment_launch_package_name} ${experiment_launch_file_name} gui:=${gui} verbose:=${verbose}"
+        timeout --signal=SIGKILL $timeout docker ./timing.sh exec $INTERACTIVE -t ${container} /bin/bash -c ". /usr/share/gazebo/setup.sh && (killall -q Xvfb; rm -f /tmp/.X${DISPLAY_ID}-lock; Xvfb :${DISPLAY_ID} -screen 0 1600x1200x16 & export DISPLAY=:${DISPLAY_ID}.0 && . /home/`id -u -n`/gazebo-mental-simulation/devel/setup.bash && roslaunch ${experiment_launch_package_name} ${experiment_launch_file_name} gui:=${gui} verbose:=${verbose}"
     else
-        timeout --signal=SIGKILL $timeout docker exec $INTERACTIVE -t ${container} /bin/bash -c ". /usr/share/gazebo/setup.sh && . /home/`id -u -n`/gazebo-mental-simulation/devel/setup.bash && roslaunch ${experiment_launch_package_name} ${experiment_launch_file_name} gui:=${gui} verbose:=${verbose}"
+        timeout --signal=SIGKILL $timeout ./timing.sh docker exec $INTERACTIVE -t ${container} /bin/bash -c ". /usr/share/gazebo/setup.sh && . /home/`id -u -n`/gazebo-mental-simulation/devel/setup.bash && roslaunch ${experiment_launch_package_name} ${experiment_launch_file_name} gui:=${gui} verbose:=${verbose}"
     fi
 else
     # check if given world file exists inside the docker container(!)
@@ -61,9 +61,9 @@ else
     echo -e "${GREEN}>>> Using world file ${BLUE}"$world_file"${GREEN}.${NC}"
     if [ "${gui}" == "false" ]; then
         echo -e "${YELLOW}>>> Using headless operation with display ID ${DISPLAY_ID}!${NC}"
-        timeout --signal=SIGKILL $timeout docker exec $INTERACTIVE -t ${container} /bin/bash -c ". /usr/share/gazebo/setup.sh && (killall -q Xvfb; rm -f /tmp/.X${DISPLAY_ID}-lock; Xvfb :${DISPLAY_ID} -screen 0 1600x1200x16 & export DISPLAY=:${DISPLAY_ID}.0 && . /home/`id -u -n`/gazebo-mental-simulation/devel/setup.bash && roslaunch ${experiment_launch_package_name} ${experiment_launch_file_name} gui:=${gui} verbose:=${verbose} world_file:=$world_file_destination_path/$world_file world_filename:=$world_file)"
+        timeout --signal=SIGKILL $timeout ./timing.sh -w $world_file docker exec $INTERACTIVE -t ${container} /bin/bash -c ". /usr/share/gazebo/setup.sh && (killall -q Xvfb; rm -f /tmp/.X${DISPLAY_ID}-lock; Xvfb :${DISPLAY_ID} -screen 0 1600x1200x16 & export DISPLAY=:${DISPLAY_ID}.0 && . /home/`id -u -n`/gazebo-mental-simulation/devel/setup.bash && roslaunch ${experiment_launch_package_name} ${experiment_launch_file_name} gui:=${gui} verbose:=${verbose} world_file:=$world_file_destination_path/$world_file world_filename:=$world_file)"
     else
-        timeout --signal=SIGKILL $timeout docker exec $INTERACTIVE -t ${container} /bin/bash -c ". /usr/share/gazebo/setup.sh && . /home/`id -u -n`/gazebo-mental-simulation/devel/setup.bash && roslaunch ${experiment_launch_package_name} ${experiment_launch_file_name} gui:=${gui} verbose:=${verbose} world_file:=$world_file_destination_path/$world_file world_filename:=$world_file"
+        timeout --signal=SIGKILL $timeout ./timing.sh -w $world_file docker exec $INTERACTIVE -t ${container} /bin/bash -c ". /usr/share/gazebo/setup.sh && . /home/`id -u -n`/gazebo-mental-simulation/devel/setup.bash && roslaunch ${experiment_launch_package_name} ${experiment_launch_file_name} gui:=${gui} verbose:=${verbose} world_file:=$world_file_destination_path/$world_file world_filename:=$world_file"
     fi
 fi
 
