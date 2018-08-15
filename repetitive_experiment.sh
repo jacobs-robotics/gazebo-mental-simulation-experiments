@@ -5,7 +5,7 @@ echo -e "${GREEN}>>> Using container ${BLUE}$1${GREEN} and world file ${BLUE}`ba
 
 DISPLAY_ID=${DISPLAY_ID:-1}
 
-for rep_counter in {1..$4}; do
+for rep_counter in `seq 1 $4`; do
     echo -e "${GREEN}>>> Repetition #${rep_counter}...${NC}"
     # run experiment script using container name and world file name
     ./experiment.sh $1 $3
