@@ -25,7 +25,7 @@ for world_file in $(docker exec --user="`id -u -n`" ${CONTAINERS[0]} /bin/bash -
 do
     # perform repeated experiment run using next container
     export DISPLAY_ID=$((CONTAINER_INDEX+1))
-    ./repetitive_experiment.sh ${CONTAINERS[$((CONTAINER_INDEX))]} ${worldfile_path} $world_file ${num_repetitions} &
+    ./repetitive_experiment.sh ${CONTAINERS[$((CONTAINER_INDEX))]} ${worldfile_path} `basename $world_file` ${num_repetitions} &
     # increment container index
     CONTAINER_INDEX=$((($CONTAINER_INDEX+1)%$NUM_CONTAINERS))
     # wait for all containers to finish
